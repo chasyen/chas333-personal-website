@@ -1,0 +1,244 @@
+BinaryLifting {
+    int up[N][LOG];
+
+    void build() {
+        for (int j = 1; j < LOG; j++)
+            for (int i = 1; i <= n; i++)
+                up[i][j] = up[up[i][j - 1]][j - 1];
+    }
+
+    int jump(int x, int k) {
+        for (int j = 0; j < LOG; j++)
+            if (k >> j & 1)
+                x = up[x][j];
+        return x;
+    }
+};
+
+BIT {
+    int n;
+    vector<int> bit;
+
+    BIT(int n) : n(n), bit(n + 1) {}
+
+    void add(int x, int v) {
+        for (; x <= n; x += x & -x)
+            bit[x] += v;
+    }
+
+    int sum(int x) {
+        int res = 0;
+        for (; x; x -= x & -x)
+            res += bit[x];
+        return res;
+    }
+};
+
+SegTree {
+    int n;
+    vector<int> tree;
+
+    SegTree(int n) : n(n), tree(4 * n) {}
+
+    void build(vector<int>& a, int p, int l, int r) {
+        if (l == r) {
+            tree[p] = a[l];
+            return;
+        }
+        int m = (l + r) / 2;
+        build(a, p * 2, l, m);
+        build(a, p * 2 + 1, m + 1, r);
+        tree[p] = tree[p * 2] + tree[p * 2 + 1];
+    }
+
+    void update(int p, int l, int r, int pos, int val) {
+        if (l == r) {
+            tree[p] = val;
+            return;
+        }
+        int m = (l + r) / 2;
+        if (pos <= m)
+            update(p * 2, l, m, pos, val);
+        else
+            update(p * 2 + 1, m + 1, r, pos, val);
+
+        tree[p] = tree[p * 2] + tree[p * 2 + 1];
+    }
+
+    int query(int p, int l, int r, int ql, int qr) {
+        if (ql <= l && r <= qr)
+            return tree[p];
+
+        int m = (l + r) / 2;
+        int ans = 0;
+
+        if (ql <= m)
+            ans += query(p * 2, l, m, ql, qr);
+        if (qr > m)
+            ans += query(p * 2 + 1, m + 1, r, ql, qr);
+
+        return ans;
+    }
+};
+
+BS {
+    int search(vector<int>& a, int x) {
+        int l = 0, r = a.size() - 1;
+
+        while (l <= r) {
+            int m = (l + r) / 2;
+
+            if (a[m] == x)
+                return m;
+            if (a[m] < x)
+                l = m + 1;
+            else
+                r = m - 1;
+        }
+
+        return -1;
+    }
+};
+
+DFS {
+    vector<int> g[N];
+    bool vis[N];
+
+    void dfs(int u) {
+        vis[u] = 1;
+
+        for (int v : g[u]) {
+            if (!vis[v])
+                dfs(v);
+        }
+    }
+};
+
+BFS {
+    vector<int> g[N];
+    bool vis[N];
+
+    void bfs(int s) {
+        queue<int> q;
+
+        q.push(s);
+        vis[s] = 1;
+
+        while (!q.empty()) {
+            int u = q.front();
+            q.pop();
+
+            for (int v : g[u]) {
+                if (vis[v]) continue;
+
+                vis[v] = 1;
+                q.push(v);
+            }
+        }
+    }
+};
+
+Knapsack {
+    int dp[N];
+
+    void solve() {
+        for (int i = 1; i <= n; i++) {
+            for (int j = W; j >= w[i]; j--) {
+                dp[j] = max(dp[j], dp[j - w[i]] + v[i]);
+            }
+        }
+    }
+};
+
+TS {
+    double search(double l, double r) {
+        while (r - l > 1e-9) {
+            double m1 = l + (r - l) / 3;
+            double m2 = r - (r - l) / 3;
+
+            if (f(m1) < f(m2))
+                l = m1;
+            else
+                r = m2;
+        }
+        return l;
+    }
+};
+
+Hash {
+    const long long P = 131;
+    long long h[N], pw[N];
+
+    void init(string s) {
+        int n = s.size();
+        pw[0] = 1;
+
+        for (int i = 1; i <= n; i++) {
+            h[i] = h[i - 1] * P + s[i - 1];
+            pw[i] = pw[i - 1] * P;
+        }
+    }
+
+    long long get(int l, int r) {
+        return h[r] - h[l - 1] * pw[r - l + 1];
+    }
+};
+
+
+DSU {
+    int p[N];
+
+    void init(int n) {
+        for (int i = 1; i <= n; i++)
+            p[i] = i;
+    }
+
+    int find(int x) {
+        if (p[x] == x) return x;
+        return p[x] = find(p[x]);
+    }
+
+    void unite(int a, int b) {
+        a = find(a);
+        b = find(b);
+        if (a != b)
+            p[a] = b;
+    }
+};
+
+
+Trie {
+    int ch[N][26];
+    bool end[N];
+    int tot = 0;
+
+    void insert(string s) {
+        int u = 0;
+
+        for (char c : s) {
+            int x = c - 'a';
+
+            if (!ch[u][x])
+                ch[u][x] = ++tot;
+
+            u = ch[u][x];
+        }
+
+        end[u] = 1;
+    }
+
+    bool find(string s) {
+        int u = 0;
+
+        for (char c : s) {
+            int x = c - 'a';
+
+            if (!ch[u][x])
+                return false;
+
+            u = ch[u][x];
+        }
+
+        return end[u];
+    }
+};

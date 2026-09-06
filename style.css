@@ -1,0 +1,973 @@
+:root {
+  --ink: #f7f7f4;
+  --paper: #191A1B;
+  --lime: #f7f7f4;
+  --line: rgba(255,255,255,.24);
+  --muted: #b7b7b1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: "Noto Sans TC", sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.site-header {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 82px;
+  padding: 0 5vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: var(--ink);
+  background: #191A1B;
+  border-bottom: 1px solid var(--line);
+
+  transition: .35s;
+}
+
+.site-header.scrolled {
+  background: rgba(8,8,8,.95);
+  backdrop-filter: blur(12px);
+  border-color: var(--line);
+}
+
+.brand {
+  font: 600 18px "Noto Sans TC";
+}
+
+.brand span {
+  display: inline-block;
+  margin-left: 5px;
+  font: 16px "DM Mono";
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+
+  font: 500 14px "DM Mono", monospace;
+}
+
+nav a {
+  opacity: .6;
+  transition: .2s;
+}
+
+nav a:hover,
+nav a.active {
+  opacity: 1;
+}
+
+nav a.active::after {
+  content: "";
+  display: block;
+  margin-top: 5px;
+  height: 1px;
+  background: var(--ink);
+}
+
+
+/* =========================================================
+   COMMON
+   ========================================================= */
+
+.page-section {
+  min-height: 100vh;
+}
+
+.eyebrow {
+  margin: 0 0 22px;
+
+  font: 500 11px "DM Mono", monospace;
+  letter-spacing: .14em;
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+
+  margin-top: 10px;
+  padding-bottom: 5px;
+
+  border-bottom: 1px solid var(--ink);
+  font-size: 14px;
+}
+
+.text-link span {
+  font-size: 19px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+
+  padding: 19vh 5vw 8vh;
+
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 7vw;
+  align-items: center;
+
+  background: var(--paper);
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1,
+.intro h2,
+.section-heading h2,
+.about h2 {
+  margin: 0;
+
+  font-size: clamp(43px,5.4vw,83px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -.055em;
+}
+
+.hero h1 em,
+.about h2 em {
+  font-family: "Playfair Display", serif;
+  font-weight: 500;
+}
+
+.hero-note {
+  max-width: 340px;
+  margin: 32px 0 0;
+
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+
+/* =========================================================
+   IMAGE PLACEHOLDER
+   ========================================================= */
+
+.image-placeholder {
+  display: grid;
+  place-items: center;
+
+  overflow: hidden;
+
+  background: #a6a69e;
+  color: rgba(255,255,255,.9);
+
+  text-align: center;
+  letter-spacing: .12em;
+  font: 500 15px "DM Mono", monospace;
+}
+
+.image-placeholder span {
+  padding: 18px 24px;
+  border: 1px solid rgba(255,255,255,.65);
+}
+
+.image-placeholder small {
+  font: 12px "Noto Sans TC";
+  letter-spacing: 0;
+}
+
+.image-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-image {
+  display: block;
+  width: 100%;
+  height: min(62vh,650px);
+  min-height: 440px;
+
+  /* 保留原始比例，避免直式圖片在不同螢幕被拉伸或裁切。 */
+  object-fit: contain;
+  object-position: center;
+  background: transparent;
+}
+
+
+/* =========================================================
+   SCROLL CUE
+   ========================================================= */
+
+.scroll-cue {
+  position: absolute;
+  left: 5vw;
+  bottom: 35px;
+
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  font: 10px "DM Mono";
+  letter-spacing: .1em;
+}
+
+.scroll-cue i {
+  width: 17px;
+  height: 17px;
+
+  border-right: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+
+  transform: rotate(45deg);
+
+  animation: scroll-bounce 1.45s ease-in-out infinite;
+}
+
+.scroll-cue i:after {
+  content: none;
+}
+
+@keyframes scroll-bounce {
+  0%,
+  100% {
+    transform: rotate(45deg) translate(0,0);
+  }
+
+  50% {
+    transform: rotate(45deg) translate(5px,5px);
+  }
+}
+
+
+/* =========================================================
+   INTRO
+   ========================================================= */
+
+.intro {
+  position: relative;
+  overflow: hidden;
+
+  padding: 13vh 5vw;
+
+  display: grid;
+  place-items: center;
+
+  background: var(--paper);
+}
+
+.intro-number {
+  position: absolute;
+  left: 5vw;
+  top: 11vh;
+
+  font: 12px "DM Mono";
+}
+
+.intro-card {
+  position: relative;
+  z-index: 1;
+
+  max-width: 650px;
+  padding: clamp(42px,6vw,85px);
+
+  color: #111;
+  background: #fff;
+
+  box-shadow: 14px 14px 0 rgba(255,255,255,.14);
+}
+
+.intro-card .eyebrow {
+  color: #111;
+}
+
+.intro h2 {
+  font-size: clamp(38px,4.8vw,72px);
+}
+
+.intro-card > p:not(.eyebrow) {
+  max-width: 420px;
+  margin: 27px 0;
+
+  font-size: 16px;
+  line-height: 2;
+}
+
+.intro-card .text-link {
+  border-color: #111;
+}
+
+
+/* =========================================================
+   INTRO ACCENT
+   ========================================================= */
+
+.accent-circle {
+  position: absolute;
+  right: 7vw;
+  bottom: 8vh;
+
+  width: 122px;
+  height: 122px;
+
+  display: grid;
+  place-items: center;
+
+  border: 1px solid var(--ink);
+  border-radius: 50%;
+
+  font: 11px/1.5 "DM Mono";
+  text-align: center;
+
+  transform: rotate(-13deg);
+}
+
+
+/* =========================================================
+   BLOG
+   ========================================================= */
+
+.blog {
+  display: none;
+
+  padding: 16vh 5vw 12vh;
+
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.blog.visible {
+  display: block;
+}
+
+.section-heading {
+  min-height: 45vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding-bottom: 50px;
+
+  border-bottom: 1px solid var(--line);
+
+  text-align: center;
+}
+
+.section-heading h2 {
+  font-size: clamp(42px,5vw,72px);
+}
+
+.posts {
+  min-height: 55vh;
+  padding: 60px 0 0;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.posts-status {
+  grid-column: 1 / -1;
+  margin: auto;
+  color: #585854;
+  font: 14px "DM Mono";
+  text-align: center;
+}
+
+.post-card {
+  width: 100%;
+  min-height: 280px;
+  padding: 55px;
+
+  color: #111;
+  background: #fff;
+
+  box-shadow: 14px 14px 0 rgba(255,255,255,.14);
+}
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.post-label {
+  display: inline-block;
+
+  padding: 7px 14px;
+
+  color: #fff;
+  background: #111;
+
+  font: 500 12px "DM Mono";
+  letter-spacing: .1em;
+}
+
+.post-card h3 {
+  margin: 28px 0 6px;
+
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.post-card p {
+  margin: 0;
+
+  color: #585854;
+  font-size: 14px;
+}
+
+.post-meta {
+  margin-top: auto;
+  padding-top: 28px;
+  color: #777 !important;
+  font: 11px "DM Mono" !important;
+  letter-spacing: .05em;
+}
+
+.post-link {
+  margin-top: 18px;
+  color: #111;
+  font: 500 12px "DM Mono";
+  letter-spacing: .08em;
+}
+
+.post-link:hover,
+.post-link:focus-visible {
+  color: #1677ff;
+}
+
+
+/* =========================================================
+   ABOUT
+   ========================================================= */
+
+.about {
+  display: none;
+
+  min-height: 100vh;
+  padding: 15vh 5vw 11vh;
+
+  background: var(--paper);
+}
+
+.about.visible {
+  display: block;
+}
+
+.about-inner {
+  max-width: 1300px;
+  margin: auto;
+
+  display: grid;
+  grid-template-columns: .78fr 1fr;
+
+  column-gap: 2vw;
+  row-gap: 54px;
+
+  align-items: center;
+}
+
+.about h2 {
+  margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   PORTRAIT
+   ========================================================= */
+
+.portrait {
+  width: min(100%,385px);
+  aspect-ratio: 4/5;
+
+  background: linear-gradient(140deg,#a6a199,#777c77);
+}
+
+.portrait span {
+  padding: 16px 20px;
+  line-height: 1.45;
+}
+
+.portrait-wrap > p {
+  margin: 15px 0 0;
+
+  font: 11px "DM Mono";
+  letter-spacing: .1em;
+}
+
+
+/* =========================================================
+   BIO
+   ========================================================= */
+
+.bio {
+  grid-column: 1 / -1;
+  justify-self: center;
+
+  width: min(100%,600px);
+  min-height: 330px;
+  padding: 46px;
+
+  background: #fff;
+  color: #111;
+
+  font-size: 15px;
+  line-height: 1.95;
+
+  box-shadow: 14px 14px 0 rgba(255,255,255,.14);
+}
+
+.bio p {
+  margin: 0 0 15px;
+}
+
+.bio-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 28px;
+}
+
+.bio-social-link {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  color: #111;
+
+  transition: color .2s ease, background-color .2s ease, transform .2s ease;
+}
+
+.bio-social-link svg {
+  width: 19px;
+  height: 19px;
+  fill: currentColor;
+}
+
+.bio-social-link:hover,
+.bio-social-link:focus-visible {
+  background: #1677ff;
+  color: #fff;
+  transform: translateY(-3px);
+}
+
+.about-home-link {
+  grid-column: 1 / -1;
+
+  margin-top: -30px;
+  justify-self: center;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+  min-height: 280px;
+  padding: 60px 5vw 26px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: space-between;
+
+  background: var(--paper);
+}
+
+.footer-name {
+  font: 500 clamp(42px,5.5vw,74px)/1 "Playfair Display", serif;
+  letter-spacing: -.05em;
+}
+
+.footer-links {
+  justify-self: end;
+
+  display: flex;
+  gap: 22px;
+
+  font: 12px "DM Mono";
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+footer p {
+  grid-column: 1 / -1;
+
+  margin: 60px 0 0;
+  padding-top: 16px;
+
+  border-top: 1px solid var(--line);
+
+  color: var(--muted);
+  font: 10px "DM Mono";
+  letter-spacing: .08em;
+}
+
+
+/* =========================================================
+   MOBILE — 700px
+   ========================================================= */
+
+@media (max-width:700px) {
+
+  /* Header */
+
+  .site-header {
+    height: 68px;
+    padding: 0 6vw;
+  }
+
+  nav {
+    gap: 14px;
+    font-size: 12px;
+  }
+
+  .brand {
+    font-size: 16px;
+  }
+
+
+  /* Hero */
+
+  .hero {
+    min-height: 100svh;
+
+    display: block;
+
+    padding: 15vh 6vw 8vh;
+  }
+
+  .hero h1 {
+    font-size: 46px;
+  }
+
+  .hero-image {
+    height: 40vh;
+    min-height: 280px;
+
+    margin-top: 35px;
+  }
+
+  .scroll-cue {
+    left: 6vw;
+    bottom: 18px;
+  }
+
+  .scroll-cue span {
+    display: none;
+  }
+
+
+  /* Intro */
+
+  .intro {
+    min-height: 75vh;
+
+    padding: 14vh 8vw 12vh 16vw;
+  }
+
+  .intro-number {
+    left: 6vw;
+    top: 7vh;
+  }
+
+  .intro h2 {
+    font-size: 42px;
+  }
+
+  .accent-circle {
+    right: -20px;
+    bottom: 30px;
+
+    width: 105px;
+    height: 105px;
+  }
+
+
+  /* Blog */
+
+  .blog {
+    padding: 12vh 7vw;
+  }
+
+  .section-heading {
+    display: block;
+  }
+
+  .section-heading .eyebrow {
+    margin-bottom: 10px;
+  }
+
+
+  /* About */
+
+  .about {
+    padding: 13vh 7vw 10vh;
+  }
+
+  .about-inner {
+    display: grid;
+    grid-template-columns: 1fr;
+
+    row-gap: 35px;
+  }
+
+  .portrait {
+    width: 72%;
+  }
+
+  .about h2 {
+    font-size: 54px;
+  }
+
+  .bio {
+    grid-column: auto;
+
+    min-height: 280px;
+    padding: 32px 28px;
+  }
+
+  .about-home-link {
+    grid-column: auto;
+
+    margin-top: -10px;
+  }
+
+
+  /* Footer */
+
+  footer {
+    min-height: 230px;
+    padding: 45px 7vw 20px;
+  }
+
+  .footer-links {
+    grid-column: 1 / -1;
+    justify-self: start;
+
+    margin-top: 36px;
+    gap: 16px;
+  }
+
+  .footer-name {
+    font-size: 54px;
+  }
+}
+
+.typewriter {
+  min-height: 2.3em;
+}
+
+.background-code-layer {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+
+  overflow: hidden;
+  pointer-events: none;
+
+  /*
+    背景文字逐字更新時，不要讓瀏覽器把它當成捲動錨點。
+    這樣使用者已經捲到其他區段時，文字高度的改變不會拉動視窗。
+  */
+  overflow-anchor: none;
+  contain: layout paint;
+}
+
+
+/* =========================================================
+   BACKGROUND CODE
+   ★ 以文字區塊的「正中心」定位
+========================================================= */
+
+.background-code {
+  position: absolute;
+
+  width: 28vw;
+  max-width: 500px;
+
+  /*
+    不要再固定 1800px
+    否則 translateY(-50%) 會以超大的盒子中心計算
+  */
+  height: auto;
+
+  margin: 0;
+  padding: 0;
+
+  /*
+    ★ top = 文字中心線
+  */
+  transform: translateY(-50%);
+
+  overflow: visible;
+
+  color: rgba(255, 255, 255, .16);
+
+  font:
+    13px/1.55
+    "DM Mono",
+    monospace;
+
+  letter-spacing: -.03em;
+
+  white-space: pre-wrap;
+}
+
+
+/* =========================================================
+   CODE
+========================================================= */
+
+.background-code code {
+  display: block;
+
+  margin: 0;
+  padding: 0;
+
+  white-space: pre-wrap;
+}
+
+
+/* =========================================================
+   CURSOR
+========================================================= */
+
+.background-code-cursor {
+  display: none;
+}
+
+.background-code-cursor.waiting {
+  display: inline;
+
+  animation:
+    background-cursor-blink
+    .78s
+    steps(1)
+    infinite;
+}
+
+@keyframes background-cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   HERO IMAGE
+========================================================= */
+
+.hero-image {
+  position: relative;
+  z-index: 1;
+}
+
+
+/* =========================================================
+   TITLE CURSOR
+========================================================= */
+
+.typing-cursor {
+  display: inline-block;
+
+  margin-left: 3px;
+
+  opacity: 0;
+
+  font-family: "DM Mono", monospace;
+
+  animation:
+    cursor-blink
+    .78s
+    steps(1)
+    infinite;
+}
+
+.typing-cursor.visible {
+  opacity: 1;
+}
+
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .background-code {
+    width: 39vw;
+
+    height: auto;
+
+    transform: translateY(-50%);
+
+    font-size: 9px;
+    line-height: 1.5;
+  }
+}
+
+.typing-cursor {
+  display: inline-block;
+  margin-left: 3px;
+  opacity: 0;
+  font-family: "DM Mono", monospace;
+  animation: cursor-blink .78s steps(1) infinite;
+}
+
+.typing-cursor.visible {
+  opacity: 1;
+}
+
+@keyframes cursor-blink {
+  50% { opacity: 0; }
+}
